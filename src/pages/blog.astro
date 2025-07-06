@@ -1,5 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+const allPosts = Object.values(
+    import.meta.glob("./posts/*.md", { eager: true }),
+);
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -12,9 +15,13 @@ import Layout from "../layouts/Layout.astro";
                 <h1>Blog page.</h1>
             </section>
             <ul>
-                <li><a href="/astro-demo/posts/post-1/">文章 1</a></li>
-                <li><a href="/astro-demo/posts/post-2/">文章 2</a></li>
-                <li><a href="/astro-demo/posts/post-3/">文章 3</a></li>
+                {
+                    allPosts.map((post: any) => (
+                        <li>
+                            <a href={post.url}>{post.frontmatter.title}</a>
+                        </li>
+                    ))
+                }
             </ul>
         </main>
     </div>
